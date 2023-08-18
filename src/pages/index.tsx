@@ -1,6 +1,6 @@
 import React from 'react';
 import type { GetStaticProps, NextPage } from 'next';
-import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Card } from '@chakra-ui/react';
+import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Card, Button, Box, Center } from '@chakra-ui/react';
 import { getAllCatExpenses } from '@/api/catExpenseAPI';
 import { CatExpense } from '@/types/CatExpense';
 import { Header } from '../components/Header';
@@ -14,32 +14,31 @@ type Props = {
 export const CatExpensesPage: NextPage<Props> = ({ catExpenses }: Props) => (
 	<PageContainer minHeight="100vh">
 		<Header />
-
-		<Card as="main" m="16px" overflowX="auto">
-			<TableContainer>
-				<Table variant="striped">
-					<Thead>
-						<Tr>
-							<Th>ID</Th>
-							<Th>Name</Th>
-							<Th>Category</Th>
-							<Th isNumeric>Amount</Th>
-						</Tr>
-					</Thead>
-					<Tbody>
-						{catExpenses.map((catExpense) => (
-							<Tr key={catExpense.id}>
-								<Td>{catExpense.id}</Td>
-								<Td>{catExpense.name}</Td>
-								<Td>{catExpense.category}</Td>
-
-								<Td isNumeric>{catExpense.amount}</Td>
+		<Box as="main" m="16px" flexGrow="1">
+			<Box display="grid">
+				<TableContainer overflowX="auto" overflowY="auto">
+					<Table variant="striped">
+						<Thead>
+							<Tr>
+								<Th>Item</Th>
+								<Th>Category</Th>
+								<Th isNumeric>Amount</Th>
 							</Tr>
-						))}
-					</Tbody>
-				</Table>
-			</TableContainer>
-		</Card>
+						</Thead>
+						<Tbody>
+							{catExpenses.map((catExpense) => (
+								<Tr key={catExpense.id}>
+									<Td>{catExpense.name}</Td>
+									<Td>{catExpense.category}</Td>
+
+									<Td isNumeric>{catExpense.amount}</Td>
+								</Tr>
+							))}
+						</Tbody>
+					</Table>
+				</TableContainer>
+			</Box>
+		</Box>
 		<Footer />
 	</PageContainer>
 );

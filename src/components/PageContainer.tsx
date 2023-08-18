@@ -2,7 +2,8 @@ import { Box, BoxProps } from '@chakra-ui/react';
 
 export const PageContainer = (props: BoxProps) => (
 	<Box
-		direction="column"
+		display="flex"
+		flexDirection="column"
 		alignItems="center"
 		justifyContent="flex-start"
 		bg="gray.50"
