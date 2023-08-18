@@ -9,23 +9,28 @@ type Props = {
 };
 
 export const CatExpensesPage: NextPage<Props> = ({ catExpenses }: Props) => {
+	if (!catExpenses) {
+		return <div>Loading...</div>;
+	}
+
 	return (
 		<Layout>
-			<p>test</p>
-
 			<table>
 				<tr>
 					<th>Item Name</th>
 					<th>Category</th>
 					<th>Amount</th>
 				</tr>
-				{catExpenses.map((catExpense) => (
-					<tr>
+				<tr>
+					<td>test</td>
+				</tr>
+				{/* {catExpenses.map((catExpense) => (
+					<tr key={catExpense.id}>
 						<td>{catExpense.name}</td>
 						<td>{catExpense.category}</td>
 						<td>{catExpense.amount}</td>
 					</tr>
-				))}
+				))} */}
 			</table>
 		</Layout>
 	);
