@@ -47,6 +47,8 @@ dist/
 # docs
 docs/task.docx
 docs/task.md
+
+# playwright
 /test-results/
 /playwright-report/
 /playwright/.cache/
