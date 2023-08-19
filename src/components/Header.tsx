@@ -1,6 +1,7 @@
 import { Flex, Heading, Box, Button, Center } from '@chakra-ui/react';
 import { DarkModeSwitch } from './DarkModeSwitch';
 import { AddExpenseButton } from './AddExpenseButton';
+import { DeleteExpenseButton } from './DeleteExpenseButton';
 
 export const Header = ({ title }: { title: string }) => (
 	<Box
@@ -28,9 +29,7 @@ export const Header = ({ title }: { title: string }) => (
 
 		<Center>
 			<AddExpenseButton />
-			<Button colorScheme="red" variant="outline" m="16px">
-				Delete Expense
-			</Button>
+			<DeleteExpenseButton />
 		</Center>
 	</Box>
 );

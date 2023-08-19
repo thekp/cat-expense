@@ -36,7 +36,6 @@ export const AddExpenseModal = ({ isOpen, onClose }: Props) => {
 		if (!isOpen) return;
 
 		getCatFact().then((data) => {
-			console.log(data);
 			setCatData(data);
 			setLoading(false);
 		});
@@ -54,7 +53,7 @@ export const AddExpenseModal = ({ isOpen, onClose }: Props) => {
 				<ModalFooter>
 					<Flex direction="column" width="100%">
 						<Button onClick={closeModal}>Close</Button>
-						<Center my="16px">
+						<Center mt="16px">
 							<Skeleton startColor="pink.500" endColor="orange.500" isLoaded={!isLoading} width="100%">
 								<Text fontSize="md">
 									<Highlight query="Cat Fact:" styles={{ px: '1', py: '1', bg: 'orange.100' }}>

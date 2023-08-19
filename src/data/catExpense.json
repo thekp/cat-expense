@@ -2,21 +2,21 @@
 	"catExpenses": [
 		{
 			"id": "1",
-			"name": "Whiskers Cat Food",
+			"itemName": "Whiskers Cat Food",
 			"category": "Food",
-			"amount": 10
+			"itemAmount": 10
 		},
 		{
 			"id": "2",
-			"name": "Self cleaning cat litter box",
+			"itemName": "Self cleaning cat litter box",
 			"category": "Furniture",
-			"amount": 500
+			"itemAmount": 500
 		},
 		{
 			"id": "3",
-			"name": "Diamond Cat collar",
+			"itemName": "Diamond Cat collar",
 			"category": "Accessory",
-			"amount": 1000
+			"itemAmount": 1000
 		}
 	]
 }

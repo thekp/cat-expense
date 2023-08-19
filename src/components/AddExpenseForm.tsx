@@ -35,12 +35,6 @@ const validateItemCategory = (value: string) => {
 	}
 };
 
-const validateItemAmount = (value: number) => {
-	if (!value) {
-		return 'Please enter a valid amount';
-	}
-};
-
 const NumberStepper = () => (
 	<NumberInput defaultValue={1} min={1}>
 		<NumberInputField />
