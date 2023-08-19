@@ -32,7 +32,7 @@ export const ExpenseTable = () => {
 
 	return (
 		<TableContainer overflowX="auto" overflowY="auto">
-			<Table variant="simple" colorScheme="purple">
+			<Table data-component="cat-expense-table" variant="simple" colorScheme="purple">
 				<Thead>
 					<Tr>
 						<Th></Th>
@@ -45,9 +45,9 @@ export const ExpenseTable = () => {
 				</Thead>
 				<Tbody>
 					{catExpensesState.map((catExpense) => (
-						<Tr key={catExpense.id} bg={itemIdWithHighestAmount.includes(catExpense.id) ? 'pink' : ''}>
+						<Tr data-component="cat-expense-row" key={catExpense.id} bg={itemIdWithHighestAmount.includes(catExpense.id) ? 'pink' : ''}>
 							<Td>
-								<Checkbox value={catExpense.id} onChange={handleCheckboxChange} colorScheme="purple" />
+								<Checkbox data-component="cat-expense-checkbox" value={catExpense.id} onChange={handleCheckboxChange} colorScheme="purple" />
 							</Td>
 							<Td>{catExpense.itemName}</Td>
 							<Td>{catExpense.category}</Td>

@@ -5,7 +5,7 @@ import path from 'path';
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-	testDir: './',
+	testDir: './src/components',
 	/* The base directory, relative to the config file, for snapshot files created with toMatchSnapshot and toHaveScreenshot. */
 	snapshotPathTemplate: '{testDir}/{testFileDir}/__screenshots__/{arg}{ext}',
 	/* Maximum time one test can run for. */
