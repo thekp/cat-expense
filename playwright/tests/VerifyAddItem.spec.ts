@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import { exec } from 'child_process';
 
 test.describe('Verify Add Item', () => {
-	test.beforeEach(() => {
+	test.afterEach(() => {
 		exec('git checkout src/data/catExpense.json');
 	});
 
