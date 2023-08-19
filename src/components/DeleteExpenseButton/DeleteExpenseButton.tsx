@@ -8,9 +8,7 @@ export const DeleteExpenseButton = () => {
 	const toast = useToast();
 
 	const deleteExpenses = async () => {
-		selectedItems.forEach(async (id) => {
-			await deleteCatExpense(id);
-		});
+		await Promise.all(selectedItems.map((id) => deleteCatExpense(id)));
 		const newCatExpenses = catExpensesState.filter((catExpense) => !selectedItems.includes(catExpense.id));
 
 		updateSelectedItems([]);

@@ -1,7 +1,7 @@
 import { CatExpenseContext } from '@/context/CatExpenseContext';
 import { CatExpense } from '@/types/CatExpense';
-import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Checkbox, CardFooter } from '@chakra-ui/react';
-import { useContext } from 'react';
+import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Checkbox } from '@chakra-ui/react';
+import { useCallback, useContext, useMemo } from 'react';
 
 const tableHeaderStyles = {
 	color: 'purple',
@@ -15,18 +15,20 @@ const getItemIdWithHighestAmount = (catExpenses: CatExpense[]) => {
 	const highestAmount = Math.max(...catExpenses.map((catExpense) => catExpense.itemAmount));
 	const itemWithHighestAmount = catExpenses.filter((catExpense) => catExpense.itemAmount === highestAmount);
 	const itemIds = itemWithHighestAmount.map((item) => item.id);
-
 	return itemIds;
 };
 
 export const ExpenseTable = () => {
 	const { selectedItems, updateSelectedItems, catExpensesState } = useContext(CatExpenseContext);
-	const itemIdWithHighestAmount = getItemIdWithHighestAmount(catExpensesState);
+	const itemIdWithHighestAmount = useMemo(() => getItemIdWithHighestAmount(catExpensesState), [catExpensesState]);
 
-	const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		event.preventDefault();
-		updateSelectedItems([...selectedItems, event.target.value]);
-	};
+	const handleCheckboxChange = useCallback(
+		(event: React.ChangeEvent<HTMLInputElement>) => {
+			event.preventDefault();
+			updateSelectedItems([...selectedItems, event.target.value]);
+		},
+		[selectedItems, updateSelectedItems],
+	);
 
 	return (
 		<TableContainer overflowX="auto" overflowY="auto">
