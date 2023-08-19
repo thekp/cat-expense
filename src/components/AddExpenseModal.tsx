@@ -39,7 +39,7 @@ export const AddExpenseModal = ({ isOpen, onClose }: Props) => {
 			setCatData(data);
 			setLoading(false);
 		});
-	}, [isOpen, getCatFact, setCatData, setLoading]);
+	}, [isOpen, setCatData, setLoading]);
 
 	return (
 		<Modal onClose={closeModal} isOpen={isOpen} isCentered>
