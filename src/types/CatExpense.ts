@@ -1,6 +1,6 @@
 export interface CatExpense {
 	id: string;
-	name: string;
+	itemName: string;
 	category: string;
-	amount: number;
+	itemAmount: number;
 }

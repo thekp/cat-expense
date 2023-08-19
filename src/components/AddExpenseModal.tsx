@@ -1,5 +1,21 @@
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button } from '@chakra-ui/react';
+import { useState, useEffect } from 'react';
+import {
+	Modal,
+	ModalOverlay,
+	ModalContent,
+	ModalHeader,
+	ModalFooter,
+	ModalBody,
+	ModalCloseButton,
+	Button,
+	Text,
+	Flex,
+	Highlight,
+	Center,
+	Skeleton,
+} from '@chakra-ui/react';
 import { AddExpenseForm } from './AddExpenseForm';
+import { getCatFact } from '@/api/catFactAPI';
 
 type Props = {
 	isOpen: boolean;
@@ -7,17 +23,48 @@ type Props = {
 };
 
 export const AddExpenseModal = ({ isOpen, onClose }: Props) => {
+	const [catData, setCatData] = useState('');
+	const [isLoading, setLoading] = useState(true);
+
+	const closeModal = () => {
+		setCatData('');
+		setLoading(true);
+		onClose();
+	};
+
+	useEffect(() => {
+		if (!isOpen) return;
+
+		getCatFact().then((data) => {
+			console.log(data);
+			setCatData(data);
+			setLoading(false);
+		});
+	}, [isOpen, getCatFact, setCatData, setLoading]);
+
 	return (
-		<Modal onClose={onClose} isOpen={isOpen} isCentered>
+		<Modal onClose={closeModal} isOpen={isOpen} isCentered>
 			<ModalOverlay bg="none" backdropFilter="auto" backdropInvert="25%" backdropBlur="1px" />
 			<ModalContent mx="8px">
 				<ModalHeader>Add Cat Expense</ModalHeader>
 				<ModalCloseButton />
 				<ModalBody>
-					<AddExpenseForm />
+					<AddExpenseForm closeModal={closeModal} />
 				</ModalBody>
 				<ModalFooter>
-					<Button onClick={onClose}>Close</Button>
+					<Flex direction="column" width="100%">
+						<Button onClick={closeModal}>Close</Button>
+						<Center my="16px">
+							<Skeleton startColor="pink.500" endColor="orange.500" isLoaded={!isLoading} width="100%">
+								<Text fontSize="md">
+									<Highlight query="Cat Fact:" styles={{ px: '1', py: '1', bg: 'orange.100' }}>
+										Cat Fact:
+									</Highlight>{' '}
+									{catData}
+								</Text>
+							</Skeleton>
+						</Center>
+					</Flex>
 				</ModalFooter>
 			</ModalContent>
 		</Modal>

@@ -1,5 +1,27 @@
 import { Formik, Field, Form } from 'formik';
-import { Button, FormControl, FormLabel, FormErrorMessage, Input, VStack, Select } from '@chakra-ui/react';
+import { useRouter } from 'next/navigation';
+import {
+	Button,
+	FormControl,
+	FormLabel,
+	FormErrorMessage,
+	Input,
+	VStack,
+	Select,
+	NumberInput,
+	NumberInputField,
+	NumberInputStepper,
+	NumberDecrementStepper,
+	NumberIncrementStepper,
+} from '@chakra-ui/react';
+import { v4 as uuidv4 } from 'uuid';
+import { addCatExpense } from '@/api/catExpenseAPI';
+import { CatExpense } from '@/types/CatExpense';
+import { ItemCategories } from '@/types/ItemCategories';
+
+type Props = {
+	closeModal: () => void;
+};
 
 const validateItemName = (value: string) => {
 	if (!value) {
@@ -13,63 +35,78 @@ const validateItemCategory = (value: string) => {
 	}
 };
 
-const validateItemAmount = (value: string) => {
+const validateItemAmount = (value: number) => {
 	if (!value) {
-		return 'Item Amount is required';
+		return 'Please enter a valid amount';
 	}
 };
 
-export const AddExpenseForm = () => {
+const NumberStepper = () => (
+	<NumberInput defaultValue={1} min={1}>
+		<NumberInputField />
+		<NumberInputStepper>
+			<NumberIncrementStepper />
+			<NumberDecrementStepper />
+		</NumberInputStepper>
+	</NumberInput>
+);
+
+export const AddExpenseForm = ({ closeModal }: Props) => {
+	const router = useRouter();
+
+	const handleSubmit = async (value: CatExpense) => {
+		console.log(value);
+		const payload = {
+			...value,
+			id: uuidv4(),
+		};
+		await addCatExpense(payload);
+		closeModal();
+		router.refresh();
+	};
+
 	return (
 		<Formik
 			initialValues={{
+				id: '',
 				itemName: '',
 				category: '',
-				itemAmount: '',
+				itemAmount: 0,
 			}}
-			onSubmit={(values) => {
-				alert(JSON.stringify(values, null, 2));
-			}}
+			onSubmit={handleSubmit}
 		>
-			{({ handleSubmit, errors, touched }) => (
-				<>
+			{({ errors, touched }) => (
+				<Form>
 					<VStack spacing={4} align="flex-start">
-						<FormControl isInvalid={!!errors.itemAmount && touched.itemAmount}>
+						<FormControl isInvalid={!!errors.itemName && touched.itemName}>
 							<FormLabel htmlFor="itemName">Item Name</FormLabel>
-							<Field as={Input} id="itemName" name="itemName" type="text" variant="filled" validate={validateItemName} />
+							<Field as={Input} id="itemName" name="itemName" type="text" validate={validateItemName} />
 							<FormErrorMessage>{errors.itemName}</FormErrorMessage>
 						</FormControl>
 
 						<FormControl isInvalid={!!errors.category && touched.category}>
 							<FormLabel htmlFor="category">Category</FormLabel>
-							<Field
-								as={Select}
-								id="category"
-								name="category"
-								type="text"
-								variant="filled"
-								placeholder="Select category"
-								validate={validateItemCategory}
-							>
-								<option value="Accessory">Accessory</option>
-								<option value="Food">Food</option>
-								<option value="Toy">Toy</option>
-								<option value="Furniture">Furniture</option>
+							<Field as={Select} id="category" name="category" placeholder="Select category" validate={validateItemCategory}>
+								{Object.keys(ItemCategories).map((category) => (
+									<option key={category} value={category}>
+										{category}
+									</option>
+								))}
 							</Field>
 							<FormErrorMessage>{errors.category}</FormErrorMessage>
 						</FormControl>
 
-						<FormControl isInvalid={!!errors.itemAmount && touched.itemAmount}>
+						<FormControl>
 							<FormLabel htmlFor="itemAmount">Item Amount</FormLabel>
-							<Field as={Input} id="itemAmount" name="itemAmount" type="text" variant="filled" validate={validateItemAmount} />
-							<FormErrorMessage>{errors.itemAmount}</FormErrorMessage>
+							<Field as={NumberStepper} id="itemAmount" name="itemAmount" type="number" />
+							{/* <FormErrorMessage>{errors.itemAmount}</FormErrorMessage> */}
 						</FormControl>
 
-						<Button type="submit" colorScheme="purple" width="full" onClick={() => handleSubmit()}>
+						<Button type="submit" colorScheme="purple" width="full">
 							Submit
 						</Button>
 					</VStack>
-				</>
+				</Form>
 			)}
 		</Formik>
 	);

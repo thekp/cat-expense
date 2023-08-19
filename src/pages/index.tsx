@@ -28,10 +28,9 @@ export const CatExpensesPage: NextPage<Props> = ({ catExpenses }: Props) => (
 						<Tbody>
 							{catExpenses.map((catExpense) => (
 								<Tr key={catExpense.id}>
-									<Td>{catExpense.name}</Td>
+									<Td>{catExpense.itemName}</Td>
 									<Td>{catExpense.category}</Td>
-
-									<Td isNumeric>{catExpense.amount}</Td>
+									<Td isNumeric>{catExpense.itemAmount}</Td>
 								</Tr>
 							))}
 						</Tbody>
