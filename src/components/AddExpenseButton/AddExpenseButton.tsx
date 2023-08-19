@@ -1,5 +1,5 @@
 import { Button, useDisclosure } from '@chakra-ui/react';
-import { AddExpenseModal } from './AddExpenseModal';
+import { AddExpenseModal } from '@/components/AddExpenseModal/AddExpenseModal';
 
 export const AddExpenseButton = () => {
 	const { isOpen, onOpen, onClose } = useDisclosure();

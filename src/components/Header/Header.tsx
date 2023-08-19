@@ -1,7 +1,7 @@
 import { Flex, Heading, Box, Button, Center } from '@chakra-ui/react';
-import { DarkModeSwitch } from './DarkModeSwitch';
-import { AddExpenseButton } from './AddExpenseButton';
-import { DeleteExpenseButton } from './DeleteExpenseButton';
+import { DarkModeSwitch } from '@/components/DarkModeSwitch/DarkModeSwitch';
+import { AddExpenseButton } from '@/components/AddExpenseButton/AddExpenseButton';
+import { DeleteExpenseButton } from '@/components/DeleteExpenseButton/DeleteExpenseButton';
 
 export const Header = ({ title }: { title: string }) => (
 	<Box

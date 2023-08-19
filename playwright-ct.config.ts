@@ -1,4 +1,5 @@
 import { defineConfig, devices } from '@playwright/experimental-ct-react';
+import path from 'path';
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -26,8 +27,27 @@ export default defineConfig({
 
 		/* Port to use for Playwright component endpoint. */
 		ctPort: 3100,
-	},
 
+		ctViteConfig: {
+			resolve: {
+				alias: {
+					'@/api': path.resolve('./src/api'),
+					'@/components': path.resolve('./src/components'),
+					'@/context': path.resolve('./src/context'),
+					'@/data': path.resolve('./src/data'),
+					'@/pages': path.resolve('./src/pages'),
+					'@/styles': path.resolve('./src/styles'),
+					'@/types': path.resolve('./src/types'),
+					'@/utilities': path.resolve('./src/utilities'),
+				},
+			},
+		},
+	},
+	expect: {
+		toHaveScreenshot: {
+			maxDiffPixelRatio: 0.02,
+		},
+	},
 	/* Configure projects for major browsers */
 	projects: [
 		{

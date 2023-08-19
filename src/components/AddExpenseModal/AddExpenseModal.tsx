@@ -14,7 +14,7 @@ import {
 	Center,
 	Skeleton,
 } from '@chakra-ui/react';
-import { AddExpenseForm } from './AddExpenseForm';
+import { AddExpenseForm } from '../AddExpenseForm/AddExpenseForm';
 import { getCatFact } from '@/api/catFactAPI';
 
 type Props = {
@@ -55,7 +55,7 @@ export const AddExpenseModal = ({ isOpen, onClose }: Props) => {
 						<Button onClick={closeModal}>Close</Button>
 						<Center mt="16px">
 							<Skeleton startColor="pink.500" endColor="orange.500" isLoaded={!isLoading} width="100%">
-								<Text fontSize="md">
+								<Text data-testid="cat-fact" fontSize="md">
 									<Highlight query="Cat Fact:" styles={{ px: '1', py: '1', bg: 'orange.100' }}>
 										Cat Fact:
 									</Highlight>{' '}

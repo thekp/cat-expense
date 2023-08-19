@@ -3,10 +3,10 @@ import type { GetStaticProps, NextPage } from 'next';
 import { Box } from '@chakra-ui/react';
 import { getAllCatExpenses } from '@/api/catExpenseAPI';
 import { CatExpense } from '@/types/CatExpense';
-import { Header } from '../components/Header';
-import { PageContainer } from '../components/PageContainer';
-import { Footer } from '../components/Footer';
-import { ExpenseTable } from '@/components/ExpenseTable';
+import { Header } from '../components/Header/Header';
+import { PageContainer } from '../components/PageContainer/PageContainer';
+import { Footer } from '../components/Footer/Footer';
+import { ExpenseTable } from '@/components/ExpenseTable/ExpenseTable';
 import { CatExpenseProvider } from '@/context/CatExpenseContext';
 
 type Props = {
