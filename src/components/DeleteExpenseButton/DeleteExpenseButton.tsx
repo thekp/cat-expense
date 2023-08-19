@@ -1,10 +1,11 @@
 import { useContext } from 'react';
+import { Button, useToast } from '@chakra-ui/react';
 import { deleteCatExpense } from '@/api/catExpenseAPI';
 import { CatExpenseContext } from '@/context/CatExpenseContext';
-import { Button } from '@chakra-ui/react';
 
 export const DeleteExpenseButton = () => {
 	const { selectedItems, updateSelectedItems, catExpensesState, updateCatExpenses } = useContext(CatExpenseContext);
+	const toast = useToast();
 
 	const deleteExpenses = async () => {
 		selectedItems.forEach(async (id) => {
@@ -14,6 +15,14 @@ export const DeleteExpenseButton = () => {
 
 		updateSelectedItems([]);
 		updateCatExpenses(newCatExpenses);
+		toast({
+			title: 'Cat Expense(s) Deleted',
+			description: "Okie! You've deleted your cat expense(s).",
+			status: 'info',
+			duration: 3000,
+			isClosable: true,
+			position: 'bottom-right',
+		});
 	};
 
 	return (

@@ -2,8 +2,7 @@ import { test, expect } from '@playwright/experimental-ct-react';
 import { StyleWrapper } from '@/utilities/StyleWrapper';
 import { AddExpenseModal } from './AddExpenseModal';
 
-// TODO: Stabalise this test
-test.skip('AddExpenseModal', async ({ mount, page }) => {
+test('AddExpenseModal', async ({ mount, page }) => {
 	await mount(
 		<StyleWrapper>
 			<AddExpenseModal

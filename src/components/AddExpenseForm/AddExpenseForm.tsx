@@ -1,6 +1,6 @@
 import { Formik, Field, Form } from 'formik';
 import { v4 as uuidv4 } from 'uuid';
-import { Button, FormControl, FormLabel, FormErrorMessage, Input, VStack, Select } from '@chakra-ui/react';
+import { Button, FormControl, FormLabel, FormErrorMessage, Input, VStack, Select, useToast } from '@chakra-ui/react';
 import { addCatExpense } from '@/api/catExpenseAPI';
 import { CatExpense } from '@/types/CatExpense';
 import { ItemCategories } from '@/types/ItemCategories';
@@ -25,6 +25,7 @@ const validateItemCategory = (value: string) => {
 
 export const AddExpenseForm = ({ closeModal }: Props) => {
 	const { catExpensesState, updateCatExpenses } = useContext(CatExpenseContext);
+	const toast = useToast();
 
 	const handleSubmit = async (value: CatExpense) => {
 		const payload = {
@@ -34,6 +35,14 @@ export const AddExpenseForm = ({ closeModal }: Props) => {
 		const cartExpense = await addCatExpense(payload);
 		updateCatExpenses([...catExpensesState, cartExpense]);
 		closeModal();
+		toast({
+			title: 'Cat Expense Added',
+			description: "Good job! You've added a new cat expense.",
+			status: 'success',
+			duration: 3000,
+			isClosable: true,
+			position: 'bottom-right',
+		});
 	};
 
 	return (
