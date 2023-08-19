@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "npx concurrently 'yarn start:mock-server' 'next dev'",
-    "build": "npx concurrently 'yarn start:mock-server' 'next build'",
+    "dev": "npx concurrently --kill-others 'yarn start:mock-server' 'next dev'",
+    "build": "npx concurrently --kill-others 'yarn start:mock-server' 'next build'",
     "start": "next start",
     "lint": "next lint",
     "start:mock-server": "json-server --watch ./src/data/catExpense.json --port 3001",
