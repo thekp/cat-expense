@@ -1,23 +1,11 @@
 import { Formik, Field, Form } from 'formik';
-import { useRouter } from 'next/navigation';
-import {
-	Button,
-	FormControl,
-	FormLabel,
-	FormErrorMessage,
-	Input,
-	VStack,
-	Select,
-	NumberInput,
-	NumberInputField,
-	NumberInputStepper,
-	NumberDecrementStepper,
-	NumberIncrementStepper,
-} from '@chakra-ui/react';
 import { v4 as uuidv4 } from 'uuid';
+import { Button, FormControl, FormLabel, FormErrorMessage, Input, VStack, Select } from '@chakra-ui/react';
 import { addCatExpense } from '@/api/catExpenseAPI';
 import { CatExpense } from '@/types/CatExpense';
 import { ItemCategories } from '@/types/ItemCategories';
+import { useContext } from 'react';
+import { CatExpenseContext } from '@/context/CatExpenseContext';
 
 type Props = {
 	closeModal: () => void;
@@ -35,28 +23,17 @@ const validateItemCategory = (value: string) => {
 	}
 };
 
-const NumberStepper = () => (
-	<NumberInput defaultValue={1} min={1}>
-		<NumberInputField />
-		<NumberInputStepper>
-			<NumberIncrementStepper />
-			<NumberDecrementStepper />
-		</NumberInputStepper>
-	</NumberInput>
-);
-
 export const AddExpenseForm = ({ closeModal }: Props) => {
-	const router = useRouter();
+	const { catExpensesState, updateCatExpenses } = useContext(CatExpenseContext);
 
 	const handleSubmit = async (value: CatExpense) => {
-		console.log(value);
 		const payload = {
 			...value,
 			id: uuidv4(),
 		};
-		await addCatExpense(payload);
+		const cartExpense = await addCatExpense(payload);
+		updateCatExpenses([...catExpensesState, cartExpense]);
 		closeModal();
-		router.refresh();
 	};
 
 	return (
@@ -72,15 +49,23 @@ export const AddExpenseForm = ({ closeModal }: Props) => {
 			{({ errors, touched }) => (
 				<Form>
 					<VStack spacing={4} align="flex-start">
-						<FormControl isInvalid={!!errors.itemName && touched.itemName}>
+						<FormControl isInvalid={!!errors.itemAmount && touched.itemAmount}>
 							<FormLabel htmlFor="itemName">Item Name</FormLabel>
-							<Field as={Input} id="itemName" name="itemName" type="text" validate={validateItemName} />
+							<Field as={Input} id="itemName" name="itemName" type="text" variant="filled" validate={validateItemName} />
 							<FormErrorMessage>{errors.itemName}</FormErrorMessage>
 						</FormControl>
 
 						<FormControl isInvalid={!!errors.category && touched.category}>
 							<FormLabel htmlFor="category">Category</FormLabel>
-							<Field as={Select} id="category" name="category" placeholder="Select category" validate={validateItemCategory}>
+							<Field
+								as={Select}
+								id="category"
+								name="category"
+								type="text"
+								variant="filled"
+								placeholder="Select category"
+								validate={validateItemCategory}
+							>
 								{Object.keys(ItemCategories).map((category) => (
 									<option key={category} value={category}>
 										{category}
@@ -92,8 +77,7 @@ export const AddExpenseForm = ({ closeModal }: Props) => {
 
 						<FormControl>
 							<FormLabel htmlFor="itemAmount">Item Amount</FormLabel>
-							<Field as={NumberStepper} id="itemAmount" name="itemAmount" type="number" />
-							{/* <FormErrorMessage>{errors.itemAmount}</FormErrorMessage> */}
+							<Field as={Input} id="itemAmount" name="itemAmount" type="number" variant="filled" />
 						</FormControl>
 
 						<Button type="submit" colorScheme="purple" width="full">

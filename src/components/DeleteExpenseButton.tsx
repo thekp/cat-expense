@@ -1,20 +1,19 @@
 import { useContext } from 'react';
-import { useRouter } from 'next/navigation';
 import { deleteCatExpense } from '@/api/catExpenseAPI';
 import { CatExpenseContext } from '@/context/CatExpenseContext';
 import { Button } from '@chakra-ui/react';
 
 export const DeleteExpenseButton = () => {
-	const router = useRouter();
-	const { selectedItems, updateSelectedItems } = useContext(CatExpenseContext);
+	const { selectedItems, updateSelectedItems, catExpensesState, updateCatExpenses } = useContext(CatExpenseContext);
 
 	const deleteExpenses = async () => {
 		selectedItems.forEach(async (id) => {
 			await deleteCatExpense(id);
 		});
+		const newCatExpenses = catExpensesState.filter((catExpense) => !selectedItems.includes(catExpense.id));
 
 		updateSelectedItems([]);
-		router.refresh();
+		updateCatExpenses(newCatExpenses);
 	};
 
 	return (

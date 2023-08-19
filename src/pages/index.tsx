@@ -14,12 +14,12 @@ type Props = {
 };
 
 export const CatExpensesPage: NextPage<Props> = ({ catExpenses }: Props) => (
-	<CatExpenseProvider>
+	<CatExpenseProvider catExpenses={catExpenses}>
 		<PageContainer minHeight="100vh">
 			<Header />
 			<Box as="main" m="16px" flexGrow="1">
 				<Box display="grid">
-					<ExpenseTable catExpenses={catExpenses} />
+					<ExpenseTable />
 				</Box>
 			</Box>
 			<Footer />
