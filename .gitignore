@@ -52,3 +52,5 @@ docs/task.md
 /test-results/
 /playwright-report/
 /playwright/.cache/
+
+.vscode
