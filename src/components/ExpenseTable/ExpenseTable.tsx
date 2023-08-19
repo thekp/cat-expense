@@ -45,7 +45,12 @@ export const ExpenseTable = () => {
 				</Thead>
 				<Tbody>
 					{catExpensesState.map((catExpense) => (
-						<Tr data-component="cat-expense-row" key={catExpense.id} bg={itemIdWithHighestAmount.includes(catExpense.id) ? 'pink' : ''}>
+						<Tr
+							data-component="cat-expense-row"
+							key={catExpense.id}
+							bg={itemIdWithHighestAmount.includes(catExpense.id) ? 'pink' : ''}
+							_dark={{ bg: itemIdWithHighestAmount.includes(catExpense.id) ? 'purple' : '' }}
+						>
 							<Td>
 								<Checkbox data-component="cat-expense-checkbox" value={catExpense.id} onChange={handleCheckboxChange} colorScheme="purple" />
 							</Td>
