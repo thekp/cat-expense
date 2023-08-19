@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "npx concurrently 'yarn start:mock-server' 'next dev'",
-    "build": "next build",
+    "build": "npx concurrently 'yarn start:mock-server' 'next build'",
+    "start": "next start",
     "lint": "next lint",
     "start:mock-server": "json-server --watch ./src/data/catExpense.json --port 3001",
     "test:components": "playwright test -c playwright-ct.config.ts",
