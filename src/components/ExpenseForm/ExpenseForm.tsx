@@ -1,14 +1,11 @@
 import { Formik, Field, Form } from 'formik';
-import { v4 as uuidv4 } from 'uuid';
-import { Button, FormControl, FormLabel, FormErrorMessage, Input, VStack, Select, useToast } from '@chakra-ui/react';
-import { addCatExpense } from '@/api/catExpenseAPI';
+import { Button, FormControl, FormLabel, FormErrorMessage, Input, VStack, Select } from '@chakra-ui/react';
 import { CatExpense } from '@/types/CatExpense';
 import { ItemCategories } from '@/types/ItemCategories';
-import { useContext } from 'react';
-import { CatExpenseContext } from '@/context/CatExpenseContext';
 
 type Props = {
-	closeModal: () => void;
+	handleSubmit: (value: CatExpense) => void;
+	initialValues?: CatExpense;
 };
 
 const validateItemName = (value: string) => {
@@ -23,38 +20,16 @@ const validateItemCategory = (value: string) => {
 	}
 };
 
-export const AddExpenseForm = ({ closeModal }: Props) => {
-	const { catExpensesState, updateCatExpenses } = useContext(CatExpenseContext);
-	const toast = useToast();
+const defaultFormVales = {
+	id: '',
+	itemName: '',
+	category: '',
+	itemAmount: 0,
+};
 
-	const handleSubmit = async (value: CatExpense) => {
-		const payload = {
-			...value,
-			id: uuidv4(),
-		};
-		const cartExpense = await addCatExpense(payload);
-		updateCatExpenses([...catExpensesState, cartExpense]);
-		closeModal();
-		toast({
-			title: 'Cat Expense Added',
-			description: "Good job! You've added a new cat expense.",
-			status: 'success',
-			duration: 3000,
-			isClosable: true,
-			position: 'bottom-right',
-		});
-	};
-
+export const ExpenseForm = ({ handleSubmit, initialValues = defaultFormVales }: Props) => {
 	return (
-		<Formik
-			initialValues={{
-				id: '',
-				itemName: '',
-				category: '',
-				itemAmount: 0,
-			}}
-			onSubmit={handleSubmit}
-		>
+		<Formik initialValues={initialValues} onSubmit={handleSubmit}>
 			{({ errors, touched }) => (
 				<Form>
 					<VStack spacing={4} align="flex-start">

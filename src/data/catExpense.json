@@ -1,22 +1,22 @@
 {
-	"catExpenses": [
-		{
-			"id": "1",
-			"itemName": "Whiskers Cat Food",
-			"category": "Food",
-			"itemAmount": 10
-		},
-		{
-			"id": "2",
-			"itemName": "Self cleaning cat litter box",
-			"category": "Furniture",
-			"itemAmount": 500
-		},
-		{
-			"id": "3",
-			"itemName": "Diamond Cat collar",
-			"category": "Accessory",
-			"itemAmount": 1000
-		}
-	]
+  "catExpenses": [
+    {
+      "id": "1",
+      "itemName": "Whiskers Cat Food",
+      "category": "Food",
+      "itemAmount": 10
+    },
+    {
+      "id": "2",
+      "itemName": "Self cleaning cat litter box",
+      "category": "Furniture",
+      "itemAmount": 500
+    },
+    {
+      "id": "3",
+      "itemName": "Diamond Cat collar",
+      "category": "Accessory",
+      "itemAmount": 1000
+    }
+  ]
 }

@@ -19,16 +19,21 @@ import { v4 as uuidv4 } from 'uuid';
 import { ExpenseForm } from '@/components/ExpenseForm/ExpenseForm';
 import { getCatFact } from '@/api/catFactAPI';
 import { CatExpenseContext } from '@/context/CatExpenseContext';
-import { addCatExpense } from '@/api/catExpenseAPI';
+import { editCatExpense } from '@/api/catExpenseAPI';
 import { CatExpense } from '@/types/CatExpense';
 
 type Props = {
 	isOpen: boolean;
 	onClose: () => void;
 	headerText: string;
+	catExpense: CatExpense;
 };
 
-export const AddExpenseModal = ({ isOpen, onClose, headerText }: Props) => {
+const editCatExpenseState = (expenses: CatExpense[], newExpense: CatExpense) => {
+	return expenses.map((expense) => (expense.id === newExpense.id ? newExpense : expense));
+};
+
+export const EditExpenseModal = ({ isOpen, onClose, headerText, catExpense }: Props) => {
 	const [catData, setCatData] = useState('');
 	const [isLoading, setLoading] = useState(true);
 	const { catExpensesState, updateCatExpenses } = useContext(CatExpenseContext);
@@ -37,15 +42,15 @@ export const AddExpenseModal = ({ isOpen, onClose, headerText }: Props) => {
 	const handleSubmit = async (value: CatExpense) => {
 		const payload = {
 			...value,
-			id: uuidv4(),
+			id: catExpense.id,
 		};
-		const cartExpense = await addCatExpense(payload);
-		updateCatExpenses([...catExpensesState, cartExpense]);
+		const catExpenseRes = await editCatExpense(payload);
+		updateCatExpenses(editCatExpenseState(catExpensesState, catExpenseRes));
 		closeModal();
 		toast({
-			title: 'Cat Expense Added',
-			description: "Good job! You've added a new cat expense.",
-			status: 'success',
+			title: 'Cat Expense Edited',
+			description: "Nice! You've edited a cat expense.",
+			status: 'info',
 			duration: 3000,
 			isClosable: true,
 			position: 'bottom-right',
@@ -70,11 +75,11 @@ export const AddExpenseModal = ({ isOpen, onClose, headerText }: Props) => {
 	return (
 		<Modal onClose={closeModal} isOpen={isOpen} isCentered>
 			<ModalOverlay bg="none" backdropFilter="auto" backdropInvert="25%" backdropBlur="1px" />
-			<ModalContent mx="8px">
+			<ModalContent p="8px">
 				<ModalHeader>{headerText}</ModalHeader>
 				<ModalCloseButton />
 				<ModalBody>
-					<ExpenseForm handleSubmit={handleSubmit} />
+					<ExpenseForm initialValues={catExpense} handleSubmit={handleSubmit} />
 				</ModalBody>
 				<ModalFooter>
 					<Flex direction="column" width="100%">

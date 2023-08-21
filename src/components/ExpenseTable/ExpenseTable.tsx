@@ -2,6 +2,7 @@ import { CatExpenseContext } from '@/context/CatExpenseContext';
 import { CatExpense } from '@/types/CatExpense';
 import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Checkbox } from '@chakra-ui/react';
 import { useCallback, useContext, useMemo } from 'react';
+import { EditExpenseButton } from '@/components/EditExpenseButton/EditExpenseButton';
 
 const tableHeaderStyles = {
 	color: 'purple',
@@ -25,6 +26,11 @@ export const ExpenseTable = () => {
 	const handleCheckboxChange = useCallback(
 		(event: React.ChangeEvent<HTMLInputElement>) => {
 			event.preventDefault();
+			if (selectedItems.includes(event.target.value)) {
+				updateSelectedItems([...selectedItems.filter((id) => id !== event.target.value)]);
+				return;
+			}
+
 			updateSelectedItems([...selectedItems, event.target.value]);
 		},
 		[selectedItems, updateSelectedItems],
@@ -41,6 +47,7 @@ export const ExpenseTable = () => {
 						<Th {...tableHeaderStyles} isNumeric>
 							Amount (THB)
 						</Th>
+						<Th></Th>
 					</Tr>
 				</Thead>
 				<Tbody>
@@ -57,6 +64,9 @@ export const ExpenseTable = () => {
 							<Td>{catExpense.itemName}</Td>
 							<Td>{catExpense.category}</Td>
 							<Td isNumeric>{catExpense.itemAmount}</Td>
+							<Td>
+								<EditExpenseButton catExpense={catExpense} />
+							</Td>
 						</Tr>
 					))}
 				</Tbody>
