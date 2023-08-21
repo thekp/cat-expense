@@ -26,6 +26,11 @@ export const ExpenseTable = () => {
 	const handleCheckboxChange = useCallback(
 		(event: React.ChangeEvent<HTMLInputElement>) => {
 			event.preventDefault();
+			if (selectedItems.includes(event.target.value)) {
+				updateSelectedItems([...selectedItems.filter((id) => id !== event.target.value)]);
+				return;
+			}
+
 			updateSelectedItems([...selectedItems, event.target.value]);
 		},
 		[selectedItems, updateSelectedItems],
