@@ -1,7 +1,8 @@
 import { useContext } from 'react';
-import { Button, useToast } from '@chakra-ui/react';
+import { Button, useToast, Text } from '@chakra-ui/react';
 import { deleteCatExpense } from '@/api/catExpenseAPI';
 import { CatExpenseContext } from '@/context/CatExpenseContext';
+import { DeleteIcon } from '@chakra-ui/icons';
 
 export const DeleteExpenseButton = () => {
 	const { selectedItems, updateSelectedItems, catExpensesState, updateCatExpenses } = useContext(CatExpenseContext);
@@ -25,7 +26,8 @@ export const DeleteExpenseButton = () => {
 
 	return (
 		<Button isDisabled={selectedItems.length < 1} colorScheme="red" variant="outline" m="16px" onClick={deleteExpenses}>
-			Delete Expense
+			<DeleteIcon />
+			<Text ml="4px"> Delete Expense</Text>
 		</Button>
 	);
 };

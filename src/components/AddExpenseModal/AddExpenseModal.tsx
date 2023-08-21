@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import {
 	Modal,
 	ModalOverlay,
@@ -13,18 +13,44 @@ import {
 	Highlight,
 	Center,
 	Skeleton,
+	useToast,
 } from '@chakra-ui/react';
-import { AddExpenseForm } from '../AddExpenseForm/AddExpenseForm';
+import { v4 as uuidv4 } from 'uuid';
+import { ExpenseForm } from '@/components/ExpenseForm/ExpenseForm';
 import { getCatFact } from '@/api/catFactAPI';
+import { CatExpenseContext } from '@/context/CatExpenseContext';
+import { addCatExpense } from '@/api/catExpenseAPI';
+import { CatExpense } from '@/types/CatExpense';
 
 type Props = {
 	isOpen: boolean;
 	onClose: () => void;
+	headerText: string;
 };
 
-export const AddExpenseModal = ({ isOpen, onClose }: Props) => {
+export const AddExpenseModal = ({ isOpen, onClose, headerText }: Props) => {
 	const [catData, setCatData] = useState('');
 	const [isLoading, setLoading] = useState(true);
+	const { catExpensesState, updateCatExpenses } = useContext(CatExpenseContext);
+	const toast = useToast();
+
+	const handleSubmit = async (value: CatExpense) => {
+		const payload = {
+			...value,
+			id: uuidv4(),
+		};
+		const cartExpense = await addCatExpense(payload);
+		updateCatExpenses([...catExpensesState, cartExpense]);
+		closeModal();
+		toast({
+			title: 'Cat Expense Added',
+			description: "Good job! You've added a new cat expense.",
+			status: 'success',
+			duration: 3000,
+			isClosable: true,
+			position: 'bottom-right',
+		});
+	};
 
 	const closeModal = () => {
 		setCatData('');
@@ -45,10 +71,10 @@ export const AddExpenseModal = ({ isOpen, onClose }: Props) => {
 		<Modal onClose={closeModal} isOpen={isOpen} isCentered>
 			<ModalOverlay bg="none" backdropFilter="auto" backdropInvert="25%" backdropBlur="1px" />
 			<ModalContent mx="8px">
-				<ModalHeader>Add Cat Expense</ModalHeader>
+				<ModalHeader>{headerText}</ModalHeader>
 				<ModalCloseButton />
 				<ModalBody>
-					<AddExpenseForm closeModal={closeModal} />
+					<ExpenseForm closeModal={closeModal} handleSubmit={handleSubmit} />
 				</ModalBody>
 				<ModalFooter>
 					<Flex direction="column" width="100%">
