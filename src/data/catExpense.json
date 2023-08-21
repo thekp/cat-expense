@@ -18,23 +18,5 @@
       "category": "Accessory",
       "itemAmount": 1000
     },
-    {
-      "id": "f1838c38-9522-4d27-9954-49ae5df10e9c",
-      "itemName": "test",
-      "category": "Toy",
-      "itemAmount": 0
-    },
-    {
-      "id": "f3ff266d-8288-4782-b0e5-cde04df2f6d2",
-      "itemName": "tst",
-      "category": "Accessory",
-      "itemAmount": 0
-    },
-    {
-      "id": "b54ff5e0-327a-48d5-ad9f-2a5a8df94a05",
-      "itemName": "1",
-      "category": "Clothing",
-      "itemAmount": -1
-    }
   ]
 }
