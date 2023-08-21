@@ -60,7 +60,7 @@ export const ExpenseTable = () => {
 							<Td>{catExpense.category}</Td>
 							<Td isNumeric>{catExpense.itemAmount}</Td>
 							<Td>
-								<EditExpenseButton />
+								<EditExpenseButton catExpense={catExpense} />
 							</Td>
 						</Tr>
 					))}

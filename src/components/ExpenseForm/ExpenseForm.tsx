@@ -5,18 +5,12 @@ import { ItemCategories } from '@/types/ItemCategories';
 
 type Props = {
 	handleSubmit: (value: CatExpense) => void;
-	initialValues: CatExpense;
+	initialValues?: CatExpense;
 };
 
 const validateItemName = (value: string) => {
 	if (!value) {
 		return 'Item Name is required';
-	}
-};
-
-const validateItemCategory = (value: string) => {
-	if (!value) {
-		return 'Category is required';
 	}
 };
 
