@@ -1,7 +1,7 @@
 import { CatExpenseContext } from '@/context/CatExpenseContext';
 import { CatExpense } from '@/types/CatExpense';
 import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Checkbox } from '@chakra-ui/react';
-import { useCallback, useContext, useMemo } from 'react';
+import { useCallback, useContext } from 'react';
 import { EditExpenseButton } from '@/components/EditExpenseButton/EditExpenseButton';
 
 const tableHeaderStyles = {
@@ -21,7 +21,7 @@ const getItemIdWithHighestAmount = (catExpenses: CatExpense[]) => {
 
 export const ExpenseTable = () => {
 	const { selectedItems, updateSelectedItems, catExpensesState } = useContext(CatExpenseContext);
-	const itemIdWithHighestAmount = useMemo(() => getItemIdWithHighestAmount(catExpensesState), [catExpensesState]);
+	const itemIdWithHighestAmount = getItemIdWithHighestAmount(catExpensesState);
 
 	const handleCheckboxChange = useCallback(
 		(event: React.ChangeEvent<HTMLInputElement>) => {
