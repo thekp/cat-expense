@@ -58,7 +58,7 @@ export const AddExpenseForm = ({ closeModal }: Props) => {
 			{({ errors, touched }) => (
 				<Form>
 					<VStack spacing={4} align="flex-start">
-						<FormControl isInvalid={!!errors.itemAmount && touched.itemAmount}>
+						<FormControl isInvalid={!!errors.itemName && touched.itemName}>
 							<FormLabel htmlFor="itemName">Item Name</FormLabel>
 							<Field as={Input} id="itemName" name="itemName" type="text" variant="filled" validate={validateItemName} />
 							<FormErrorMessage>{errors.itemName}</FormErrorMessage>
